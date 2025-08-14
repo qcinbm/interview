@@ -109,4 +109,3 @@ Chapter, Heading, HS Code 6 digits, Goods Description, Rule of Origin
 
 - Submit the complete `src/` and `tests/` directories.
 - Code must run without errors on Python 3.9+.
-- Only use standard libraries plus `pandas`, `openpyxl`, and `pytest`.
