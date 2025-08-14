@@ -1,119 +1,112 @@
-# BỘ ĐỀ PHỎNG VẤN PYTHON + XỬ LÝ EXCEL
+# PYTHON + EXCEL INTERVIEW TASKS
 
-## 📌 Giới thiệu
-Bộ đề này gồm **2 câu hỏi** nhằm kiểm tra kỹ năng lập trình Python, xử lý dữ liệu, và làm việc với file Excel.  
-Ứng viên cần:
-- Hiểu và xử lý định dạng số khác nhau (hệ dấu chấm / dấu phẩy).
-- Làm sạch và chuẩn hoá dữ liệu từ file Excel theo yêu cầu cụ thể.
+## Introduction
+This repository contains two exercises designed to evaluate Python programming, data cleaning, and Excel processing skills. Candidates are expected to:
+
+- Handle different numeric formats (comma and period as decimal or thousands separators).
+- Clean and standardize data from an Excel file according to specific rules.
 
 ---
 
-## 📝 Yêu cầu bài làm
+## Tasks
 
-### **Câu 1 – Chuẩn hoá số liệu hệ dấu chấm / dấu phẩy**
-**Mô tả:**  
-Cho một danh sách chuỗi số, mỗi số có thể:
-- **Hệ Anh/Mỹ**: Dấu chấm `.` làm số thập phân, dấu phẩy `,` làm phân cách hàng nghìn.
-- **Hệ Châu Âu/VN**: Dấu phẩy `,` làm số thập phân, dấu chấm `.` làm phân cách hàng nghìn.
+### 1. Normalize Number Formats
+**Description**
 
-**Nhiệm vụ:**
-- Viết hàm Python `normalize_numbers(numbers)` nhận vào **danh sách chuỗi số** và trả về danh sách **float** chuẩn hoá theo hệ Anh/Mỹ (dấu `.` làm số thập phân).
-- Có thể đọc dữ liệu từ file `data/numbers_input.txt`.
+Given a list of numeric strings where:
+- **English/American format** uses a period `.` for decimals and a comma `,` for thousands.
+- **European/Vietnamese format** uses a comma `,` for decimals and a period `.` for thousands.
 
-**Ví dụ Input:**
+**Requirement**
+
+Implement `normalize_numbers(numbers)` that accepts a list of strings and returns a list of floats normalized to the English/American format. Input may also be provided in `data/numbers_input.txt`.
+
+**Example**
+
+Input:
 ```
-
 1,234.56
 1.234,56
 1000
 2,5
 2.5
-
 ```
 
-**Kết quả mong muốn:**
+Output:
 ```python
 [1234.56, 1234.56, 1000.0, 2.5, 2.5]
 ```
 
 ---
 
-### **Câu 2 – Chuẩn hoá dữ liệu quy tắc xuất xứ (Excel)**
+### 2. Normalize Rules of Origin Data (Excel)
 
-**Mô tả:**
-Cho file Excel `data/qtxx_input.xlsx` chứa:
+**Description**
 
-* Mã HS bị chia thành nhiều cột, có dấu chấm/khoảng trắng.
-* Mô tả hàng hoá chứa ký tự thừa (`-`, xuống dòng).
-* Quy tắc xuất xứ có thể chứa số thập phân với dấu phẩy hoặc dấu chấm.
+The Excel file `data/QTXX.xlsx` contains:
+- HS codes split across multiple columns with dots or spaces.
+- Goods descriptions containing extra characters (`-`, line breaks).
+- Rules of origin that may use either commas or periods for decimals.
 
-**Nhiệm vụ:**
+**Requirement**
 
-1. Gộp các cột mã HS, chuẩn hoá thành đúng 6 chữ số, bỏ dòng không hợp lệ.
-2. Chuẩn hoá mô tả hàng hoá:
+1. Combine HS code columns into a six-digit code and drop invalid rows.
+2. Clean the goods description while preserving hierarchy dashes and removing extra whitespace or line breaks.
+3. Normalize decimal numbers in the rule of origin column using `.` as the decimal separator.
+4. Add the columns **Chapter** and **Heading** from the original data.
+5. Export a CSV file with the column order:
 
-   * Giữ nguyên dấu `-` để thể hiện phân cấp nhưng loại bỏ khoảng trắng thừa, ký tự xuống dòng.
-3. Chuẩn hoá cột Quy tắc xuất xứ về dấu chấm `.` làm số thập phân.
-4. Bổ sung các cột “Chương” và “Nhóm” từ dữ liệu gốc.
-5. Xuất file CSV với thứ tự cột:
+```
+Chapter, Heading, HS Code 6 digits, Goods Description, Rule of Origin
+```
 
-   ```
-   Chương, Nhóm, Mã HS 6 số, Mô tả hàng hoá, Quy tắc xuất xứ
-   ```
-6. Kết quả mong muốn giống file `data/qtxx_expected_output.csv`.
+6. The result should match `data/qtxx_expected_output.csv`.
 
 ---
 
-## 📂 Cấu trúc thư mục
+## Project Structure
 
 ```
-interview_test/
-│
+.
 ├── README.md
+├── requirements.txt
 ├── data/
 │   ├── numbers_input.txt
-│   ├── qtxx_input.xlsx
+│   ├── QTXX.xlsx
 │   └── qtxx_expected_output.csv
-│
 ├── src/
+│   ├── __init__.py
 │   ├── normalize_numbers.py
 │   └── normalize_origin_rules.py
-│
-├── tests/
-│   ├── test_numbers.py
-│   └── test_qtxx.py
-│
-└── requirements.txt
+└── tests/
+    ├── test_numbers.py
+    └── test_qtxx.py
 ```
 
 ---
 
-## ▶️ Cách chạy
+## Usage
 
-1. **Cài thư viện**
+1. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-```bash
-pip install -r requirements.txt
-```
+2. **Run individual scripts**
+   ```bash
+   python src/normalize_numbers.py
+   python src/normalize_origin_rules.py
+   ```
 
-2. **Chạy từng bài**
-
-```bash
-python src/normalize_numbers.py
-python src/normalize_origin_rules.py
-```
-
-3. **Chạy toàn bộ test**
-
-```bash
-pytest
-```
+3. **Run all tests**
+   ```bash
+   pytest
+   ```
 
 ---
 
-## ✅ Yêu cầu nộp bài
+## Submission Requirements
 
-* Nộp toàn bộ thư mục `src/` và `tests/`.
-* Code phải chạy không lỗi với Python 3.9+.
-* Không dùng thư viện ngoài trừ `pandas`, `openpyxl`, `pytest`.
-
+- Submit the complete `src/` and `tests/` directories.
+- Code must run without errors on Python 3.9+.
+- Only use standard libraries plus `pandas`, `openpyxl`, and `pytest`.
